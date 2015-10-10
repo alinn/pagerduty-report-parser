@@ -73,5 +73,5 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Printf("Done")
+	fmt.Println("Done")
 }
