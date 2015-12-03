@@ -62,7 +62,11 @@ func main() {
 				log.Fatal(err)
 			}
 			_, w := alertstart.ISOWeek()
-			if !inTimeSpan(workdaystart, workdayend, alertstart) && !inTimeSpan(alertend, workdayend, alertend) {
+			startDay := alertstart.Weekday();
+			endDay := alertend.Weekday();
+			startIsWeekend := startDay == time.Saturday || startDay == time.Sunday;
+			endDayIsWeekend := endDay == time.Saturday || endDay == time.Sunday;
+			if (startIsWeekend || !inTimeSpan(workdaystart, workdayend, alertstart)) && (endDayIsWeekend || !inTimeSpan(alertend, workdayend, alertend)) {
 				fmt.Println("Incident", data[0], "in CW", w, "at", alertstart.Format("02.01 15:04 MST"), "(", data[5], ") is outside working hours")
 			}
 		}
